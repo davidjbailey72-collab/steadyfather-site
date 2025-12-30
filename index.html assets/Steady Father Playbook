@@ -1,0 +1,5 @@
+index.html
+assets/   (images, favicon, etc.)
+netlify.toml
+_redirects (optional)
+_headers   (optional)
