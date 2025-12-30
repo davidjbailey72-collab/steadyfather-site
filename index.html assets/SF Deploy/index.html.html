@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Steady Father — Chess, Not Checkers</title>
+  <meta name="description" content="Court-smart co-parenting for fathers: calm authority, credible communication, clean documentation, and the long game." />
+  <style>
+    :root{
+      --slate:#2F4F6F;
+      --char:#2B2B2B;
+      --bg:#F7F7F7;
+      --card:#FFFFFF;
+      --muted:#6B7280;
+      --line:#E5E7EB;
+      --radius:18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--char);
+      background:linear-gradient(180deg, #ffffff 0%, var(--bg) 80%);
+    }
+    a{color:inherit}
+    code{background:#f1f5f9; padding:2px 6px; border-radius:8px; border:1px solid var(--line);}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 22px;}
+    .topbar{
+      position:sticky; top:0;
+      backdrop-filter:saturate(180%) blur(10px);
+      background:rgba(255,255,255,.75);
+      border-bottom:1px solid var(--line);
+      z-index:10;
+    }
+    .topbar .inner{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:14px;}
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none;}
+    .mark{
+      width:52px; height:52px; border-radius:12px;
+      background:linear-gradient(135deg, var(--slate), #1f3b55);
+      display:grid; place-items:center;
+      box-shadow: 0 8px 18px rgba(47,79,111,.25);
+      color:#fff; font-weight:800;
+      letter-spacing:.5px;
+      flex:0 0 auto;
+    }
+    .brand strong{font-size:14px; letter-spacing:.4px;}
+    .brand span{display:block; font-size:12px; color:var(--muted); margin-top:1px;}
+    .nav{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+    .nav a{font-size:13px; color:var(--muted); text-decoration:none; padding:8px 10px; border-radius:10px;}
+    .nav a:hover{background:#f1f5f9; color:var(--char)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:11px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      background:#fff;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background:var(--slate);
+      color:#fff;
+      border-color:transparent;
+      box-shadow: 0 14px 30px rgba(47,79,111,.25);
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.ghost:hover{background:#f8fafc}
+
+    .hero{padding:54px 0 28px;}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns:1fr;}
+      .nav{display:none;}
+    }
+    .hcard{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+    }
+    h1{font-size:40px; line-height:1.06; margin:0 0 12px; letter-spacing:-.6px;}
+    @media (max-width: 520px){h1{font-size:34px}}
+    .sub{color:var(--muted); font-size:16px; line-height:1.55; margin:0 0 18px;}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:16px 0 0;}
+    .chip{font-size:12px; color:var(--muted); border:1px solid var(--line); background:#fff; padding:8px 10px; border-radius:999px;}
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:16px;}
+    .fine{font-size:12px; color:var(--muted); margin-top:10px; line-height:1.45;}
+
+    .panel{
+      background:linear-gradient(180deg, rgba(47,79,111,.10), rgba(47,79,111,.03));
+      border:1px solid rgba(47,79,111,.18);
+    }
+    .panel h3{margin:0 0 10px; font-size:16px;}
+    .panel p{margin:0 0 14px; color:var(--muted); font-size:14px; line-height:1.55;}
+    .klist{margin:0; padding:0; list-style:none; display:grid; gap:10px;}
+    .klist li{display:flex; gap:10px; align-items:flex-start;}
+    .dot{width:10px; height:10px; border-radius:999px; background:var(--slate); margin-top:5px; flex:0 0 auto;}
+
+    section{padding:22px 0;}
+    .sectionTitle{font-size:22px; margin:0 0 8px; letter-spacing:-.2px;}
+    .sectionSub{margin:0 0 14px; color:var(--muted); line-height:1.55;}
+
+    .cards{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+    @media (max-width: 900px){.cards{grid-template-columns:1fr;}}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow);}
+    .card h4{margin:0 0 8px; font-size:15px;}
+    .card p{margin:0; color:var(--muted); font-size:14px; line-height:1.55;}
+
+    .pricing{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+    @media (max-width: 900px){.pricing{grid-template-columns:1fr;}}
+    .priceCard{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); position:relative;}
+    .badge{position:absolute; top:16px; right:16px; font-size:11px; padding:6px 10px; border-radius:999px; background:rgba(47,79,111,.10); color:var(--slate); border:1px solid rgba(47,79,111,.18);}
+    .tier{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.12em;}
+    .price{font-size:34px; margin:8px 0 10px; letter-spacing:-.6px;}
+    .bullets{margin:0; padding-left:18px; color:var(--muted); line-height:1.6;}
+    .bullets li{margin:6px 0;}
+
+    footer{padding:26px 0 40px; color:var(--muted); font-size:12px; line-height:1.6;}
+    .footgrid{display:grid; grid-template-columns:1.3fr .7fr; gap:16px;}
+    @media (max-width: 900px){.footgrid{grid-template-columns:1fr;}}
+    .links{display:flex; flex-direction:column; gap:8px;}
+    .links a{color:var(--muted); text-decoration:none;}
+    .links a:hover{color:var(--char)}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <a class="brand" href="#top">
+          <div class="mark" aria-label="Steady Father mark">
+            <!-- Cornered queen with distinct silhouettes (readable) -->
+            <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chess endgame icon" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,.25));">
+              <!-- Queen (cornered) -->
+              <path d="M17.8 5.8c.8 0 1.5.7 1.5 1.5 0 .5-.3 1-.7 1.2l.7 2.1c.1.3-.1.6-.4.6H15c-.3 0-.5-.3-.4-.6l.7-2.1c-.4-.2-.7-.7-.7-1.2 0-.8.7-1.5 1.6-1.5Z" fill="white"/>
+              <path d="M15 12.8h3.8c.4 0 .7.3.7.7v.9c0 .4-.3.7-.7.7H15c-.4 0-.7-.3-.7-.7v-.9c0-.4.3-.7.7-.7Z" fill="white"/>
+              <!-- Knight -->
+              <path d="M5.4 6.9c1.8-1.4 3.9-1 4.6.3.4.7.3 1.6-.3 2.3l.9.7c.2.2.1.6-.2.6H4.9c-.3 0-.5-.2-.5-.5V7.4c0-.3.2-.4 1-.5Z" fill="white"/>
+              <!-- Rook -->
+              <path d="M10.7 5.8h2.2v1h.8v-1h1v3.6h-4V5.8Z" fill="white"/>
+              <!-- Bishop -->
+              <path d="M6.8 13.2c.9 0 1.7.8 1.7 1.7 0 .6-.3 1.1-.8 1.4l.5 1.4c.1.3-.1.6-.4.6H5.9c-.3 0-.5-.3-.4-.6l.5-1.4c-.5-.3-.8-.8-.8-1.4 0-.9.8-1.7 1.7-1.7Z" fill="white"/>
+              <!-- Pawn -->
+              <path d="M12 15.2c.9 0 1.7.8 1.7 1.7 0 .6-.3 1.2-.9 1.5l.6 1.4c.1.3-.1.6-.4.6h-2c-.3 0-.5-.3-.4-.6l.6-1.4c-.6-.3-.9-.9-.9-1.5 0-.9.8-1.7 1.7-1.7Z" fill="white"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Steady Father</strong>
+            <span>Chess, Not Checkers</span>
+          </div>
+        </a>
+        <nav class="nav">
+          <a href="#start">Start Here</a>
+          <a href="#philosophy">Philosophy</a>
+          <a href="#tools">Tools</a>
+          <a href="#podcast">Podcast</a>
+          <a href="#products">Products</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="btn primary" href="#products">Get the Playbook</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <div class="hero">
+      <div class="wrap">
+        <div class="grid">
+          <div class="hcard">
+            <h1>Calm authority for fathers in high-conflict co-parenting.</h1>
+            <p class="sub">
+              <strong>Chess, Not Checkers</strong> is a strategic philosophy for staying credible, steady, and present.
+              No rants. No legal advice. Just court-smart communication, clean documentation, and the long game.
+            </p>
+            <div class="ctaRow">
+              <a class="btn primary" href="#products">Get the Playbook</a>
+              <a class="btn ghost" href="Chess_Moves_and_Scripture_Worksheet.pdf" download>Download worksheet</a>
+              <a class="btn ghost" href="#podcast">Listen to the podcast</a>
+            </div>
+            <p class="fine">
+              Educational content only. Not legal advice. Always consult a qualified attorney for your jurisdiction.
+            </p>
+            <div class="chips">
+              <div class="chip">Court-credible tone</div>
+              <div class="chip">Templates + Logs</div>
+              <div class="chip">Wisdom Lens (not sermons)</div>
+              <div class="chip">Built for fathers</div>
+            </div>
+          </div>
+
+          <div class="hcard panel">
+            <h3>What “steady” looks like</h3>
+            <p>
+              You don’t win by reacting harder. You win by positioning better.
+              This brand helps you protect your relationship with your kids without losing yourself.
+            </p>
+            <ul class="klist">
+              <li><span class="dot"></span><div><strong>Short, neutral communication</strong><br><span style="color:var(--muted); font-size:13px;">Write for the future reader.</span></div></li>
+              <li><span class="dot"></span><div><strong>Boundaries without ultimatums</strong><br><span style="color:var(--muted); font-size:13px;">Firm, calm, repeatable.</span></div></li>
+              <li><span class="dot"></span><div><strong>Documentation that matters</strong><br><span style="color:var(--muted); font-size:13px;">Patterns over moments.</span></div></li>
+              <li><span class="dot"></span><div><strong>Wisdom Lens</strong><br><span style="color:var(--muted); font-size:13px;">Self-mastery, measured speech, long-game thinking.</span></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="start">
+      <div class="wrap">
+        <h2 class="sectionTitle">Start here</h2>
+        <p class="sectionSub">If you’re in a high-conflict dynamic, the fastest win is reducing reactive mistakes. Use this simple path.</p>
+        <div class="cards">
+          <div class="card">
+            <h4>1) Get the free worksheet</h4>
+            <p>Use <strong>Chess Moves + Scripture</strong> to slow down reactions and choose the steady move.</p>
+            <div class="ctaRow" style="margin-top:12px;"><a class="btn primary" href="Chess_Moves_and_Scripture_Worksheet.pdf" download>Download worksheet</a></div>
+            <p class="fine">If you host assets in a folder, change the link to <code>/assets/Chess_Moves_and_Scripture_Worksheet.pdf</code>.</p>
+          </div>
+          <div class="card">
+            <h4>2) Listen to Episode 1</h4>
+            <p>Learn the core frame: reaction feels right, but strategy protects you later. Short, calm, practical.</p>
+            <div class="ctaRow" style="margin-top:12px;"><a class="btn ghost" href="#podcast">Go to podcast</a></div>
+          </div>
+          <div class="card">
+            <h4>3) Choose your level of structure</h4>
+            <p>Playbook for strategy. Workbook for implementation. Both are built for court credibility and the long game.</p>
+            <div class="ctaRow" style="margin-top:12px;"><a class="btn ghost" href="#products">See products</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy">
+      <div class="wrap">
+        <h2 class="sectionTitle">The philosophy: Chess, Not Checkers</h2>
+        <p class="sectionSub">
+          Checkers reacts. Chess positions. The Steady Father mindset is about restraint that reads as stability —
+          and stability that protects your access to your children.
+        </p>
+        <div class="cards">
+          <div class="card">
+            <h4>Checkers</h4>
+            <p>Immediate reaction. Emotional relief. More words. More conflict. More evidence against you.</p>
+          </div>
+          <div class="card">
+            <h4>Chess</h4>
+            <p>Strategic restraint. Short messages. Clean logs. Calm repetition. Outcomes become inevitable.</p>
+          </div>
+          <div class="card">
+            <h4>Steady</h4>
+            <p>Present with your kids. Credible to professionals. Disciplined under pressure. Long-game fatherhood.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="wrap">
+        <h2 class="sectionTitle">Tools you can use immediately</h2>
+        <p class="sectionSub">Built from real father experience: practical, court-aware, and designed to reduce mistakes.</p>
+        <div class="cards">
+          <div class="card">
+            <h4>Court-safe communication templates</h4>
+            <p>Respond without defensiveness, keep it child-focused, and avoid traps that create bad optics.</p>
+          </div>
+          <div class="card">
+            <h4>Incident documentation logs</h4>
+            <p>Objective documentation that highlights patterns without emotional journaling.</p>
+          </div>
+          <div class="card">
+            <h4>Chess Moves + Scripture worksheet</h4>
+            <p>Replace impulse with positioning — anchored in wisdom, not emotion.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="podcast">
+      <div class="wrap">
+        <h2 class="sectionTitle">The Steady Father Podcast</h2>
+        <p class="sectionSub">Short, calm episodes for fathers who want strategy, credibility, and the long game.</p>
+        <div class="cards">
+          <div class="card">
+            <h4>Episode themes</h4>
+            <p>Reaction vs restraint • silence as strength • court optics • documentation • boundaries without escalation.</p>
+          </div>
+          <div class="card">
+            <h4>Format</h4>
+            <p>15–25 minutes • solo host • repeatable structure • “Chess Move vs Checkers Reaction” takeaway.</p>
+          </div>
+          <div class="card">
+            <h4>Where to listen</h4>
+            <p><em>Replace these with real links:</em><br>Spotify • Apple Podcasts • YouTube</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials">
+      <div class="wrap">
+        <h2 class="sectionTitle">What fathers say</h2>
+        <p class="sectionSub">Replace these placeholders with real quotes as they come in. Keep them short and specific.</p>
+        <div class="cards">
+          <div class="card">
+            <h4>“It helped me stop over-explaining.”</h4>
+            <p>“I realized my texts were trying to be understood instead of being credible. The templates fixed that.”</p>
+            <p style="margin-top:10px; color:var(--muted); font-size:12px;">— Father of two (Texas)</p>
+          </div>
+          <div class="card">
+            <h4>“Calm, not cheesy.”</h4>
+            <p>“No ranting. No drama. Just structure that’s easy to follow when emotions are high.”</p>
+            <p style="margin-top:10px; color:var(--muted); font-size:12px;">— Co-parenting dad</p>
+          </div>
+          <div class="card">
+            <h4>“The worksheet is the reset button.”</h4>
+            <p>“Before I respond, I run it through the Chess Moves page. It keeps me steady.”</p>
+            <p style="margin-top:10px; color:var(--muted); font-size:12px;">— Father navigating high conflict</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="products">
+      <div class="wrap">
+        <h2 class="sectionTitle">Products</h2>
+        <p class="sectionSub">Choose the level of structure you want. Instant download. Built for fathers.</p>
+
+        <div class="pricing">
+          <div class="priceCard">
+            <div class="tier">Playbook</div>
+            <div class="price">$29</div>
+            <ul class="bullets">
+              <li>High-Conflict Co-Parent Playbook (Chess, Not Checkers)</li>
+              <li>Court-credible communication principles</li>
+              <li>Boundaries + documentation framework</li>
+              <li>Wisdom Lens sidebars (optional, not sermons)</li>
+            </ul>
+            <div class="ctaRow" style="margin-top:14px;">
+              <a class="btn primary" href="#" onclick="alert('Link this to your Gumroad/Shopify checkout.'); return false;">Get the Playbook</a>
+            </div>
+          </div>
+
+          <div class="priceCard">
+            <div class="badge">Best value</div>
+            <div class="tier">Protection Pack</div>
+            <div class="price">$79</div>
+            <ul class="bullets">
+              <li>Everything in the Playbook</li>
+              <li>Workbook + court-safe templates</li>
+              <li>Incident logs (judge-friendly structure)</li>
+              <li>Chess Moves worksheet included</li>
+            </ul>
+            <div class="ctaRow" style="margin-top:14px;">
+              <a class="btn primary" href="#" onclick="alert('Link this to your Gumroad/Shopify checkout.'); return false;">Get Protection Pack</a>
+            </div>
+          </div>
+
+          <div class="priceCard">
+            <div class="tier">Strategic Father Kit</div>
+            <div class="price">$149</div>
+            <ul class="bullets">
+              <li>Everything in Protection Pack</li>
+              <li>Bonus checklists: court optics + mediation prep</li>
+              <li>Premium implementation guide (recommended)</li>
+              <li>Future: recorded walkthrough option</li>
+            </ul>
+            <div class="ctaRow" style="margin-top:14px;">
+              <a class="btn primary" href="#" onclick="alert('Link this to your Gumroad/Shopify checkout.'); return false;">Get the Kit</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="fine" style="margin-top:12px;">
+          Tip: Make $79 the anchor tier in your checkout and keep $149 for your most committed buyers.
+        </p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <h2 class="sectionTitle">FAQ</h2>
+        <p class="sectionSub">Clear answers, zero hype.</p>
+        <div class="cards">
+          <div class="card">
+            <h4>Is this legal advice?</h4>
+            <p>No. This is educational strategy and communication discipline. For legal advice, consult a licensed attorney in your jurisdiction.</p>
+          </div>
+          <div class="card">
+            <h4>Is the “Wisdom Lens” religious?</h4>
+            <p>It’s optional. We reference biblical wisdom as practical principles (self-control, measured speech, long-game thinking) — not sermons.</p>
+          </div>
+          <div class="card">
+            <h4>What if the other parent won’t cooperate?</h4>
+            <p>That’s the point. This system is built for high-conflict dynamics: you control your behavior, tone, and record.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="wrap">
+        <div class="footgrid">
+          <div>
+            <strong style="color:var(--char);">Steady Father</strong>
+            <div style="margin-top:6px;">Chess, Not Checkers in high-conflict co-parenting.</div>
+            <div style="margin-top:10px;">
+              <strong>Disclaimer:</strong> This site provides educational information only and does not provide legal advice.
+              Consult a licensed attorney for advice about your situation and jurisdiction.
+            </div>
+          </div>
+          <div class="links">
+            <a href="#products">Products</a>
+            <a href="#podcast">Podcast</a>
+            <a href="Chess_Moves_and_Scripture_Worksheet.pdf" download>Free worksheet</a>
+            <a href="mailto:hello@steadyfather.com">hello@steadyfather.com</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
