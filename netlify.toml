@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+[[redirects]]
+  from = "/buy"
+  to = "https://YOURNAME.gumroad.com/l/PLAYBOOK"
+  status = 302
+
+[[redirects]]
+  from = "/workbook"
+  to = "https://YOURNAME.gumroad.com/l/WORKBOOK"
+  status = 302
+
+[[redirects]]
+  from = "/protection"
+  to = "https://YOURNAME.gumroad.com/l/PROTECTIONPACK"
+  status = 302
